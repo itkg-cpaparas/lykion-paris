@@ -4,6 +4,7 @@ namespace Lykion\LykionBundle\Controller;
 
 use Lykion\LykionBundle\Model\Page;
 use Lykion\LykionBundle\Entity\Spectacle;
+use Lykion\LykionBundle\Form\Type\SpectacleType;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -16,15 +17,9 @@ class SpectacleController extends Controller
 {
 	public function newAction(Request $request)
 	{
-		$spectacle = new Spectacle();
-        $spectacle->setTitle("Cargèse 2013");
-        $spectacle->setDescription('Spéctacle pour fêter Pâques');
+		$form = $this->get('form.factory')->create(new SpectacleType());
 
-        $form = $this->createFormBuilder($spectacle)
-                    ->add('title','text')
-                    ->add('description','text')
-                    ->add('save','submit')
-                    ->getForm();
+        $request = $this->get('request');
         return $this->render('LykionLykionBundle:Spectacle:new.html.twig',
             array('form'=> $form->createView(),));
 	}
